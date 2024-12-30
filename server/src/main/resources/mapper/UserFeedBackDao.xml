@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.app.homestay.mapper.UserFeedBackMapper">
+
+    <resultMap id="feeds" type="com.app.homestay.domain.FeedBackInfo">
+        <result column="uid" property="uid"/>
+        <result column="order_num" property="order_num"/>
+        <result column="feed_content" property="feed_content"/>
+        <result column="create_time" property="create_time"/>
+        <result column="username" property="username"/>
+    </resultMap>
+
+
+    <insert id="add" parameterType="feedBackInfo">
+        insert into feed_table
+        values(#{uid},#{order_num},#{feed_content},#{create_time},#{username})
+    </insert>
+
+
+    <select id="query" resultMap="feeds">
+        select *from feed_table order by uid desc
+    </select>
+
+    <select id="queryName" parameterType="java.lang.String" resultMap="feeds">
+
+        select *from feed_table where username =#{username} order by uid desc
+    </select>
+
+
+</mapper>

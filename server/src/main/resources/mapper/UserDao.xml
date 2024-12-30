@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.app.homestay.mapper.UserMapper">
+
+    <resultMap id="users" type="com.app.homestay.domain.UserInfo">
+        <result column="uid" property="uid"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="avatar" property="avatar"/>
+        <result column="identity" property="identity"/>
+        <result column="nickname" property="nickname"/>
+    </resultMap>
+
+
+    <insert id="register" parameterType="userInfo">
+        insert into user_table
+        values(#{uid},#{username},#{password},#{mobile},#{email},#{avatar},#{identity},#{nickname})
+    </insert>
+
+
+    <select id="isRegister" parameterType="userInfo" resultType="userInfo">
+        select * from user_table where username=#{username}
+    </select>
+
+    <select id="query" resultMap="users">
+        select *from user_table
+    </select>
+
+    <update id="pwd" parameterType="userInfo">
+        update user_table
+        <trim prefix="set" suffixOverrides=",">
+            <if test="username!=null">username=#{username},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="mobile!=null">mobile=#{mobile},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="avatar!=null">avatar=#{avatar},</if>
+            <if test="identity!=0">identity=#{identity},</if>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+        </trim>
+
+        where uid=#{uid}
+    </update>
+
+
+    <update id="edit" parameterType="userInfo">
+        update user_table
+        <trim prefix="set" suffixOverrides=",">
+            <if test="username!=null">username=#{username},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="mobile!=null">mobile=#{mobile},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="avatar!=null">avatar=#{avatar},</if>
+            <if test="identity!=0">identity=#{identity},</if>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+        </trim>
+
+        where uid=#{uid}
+    </update>
+
+</mapper>

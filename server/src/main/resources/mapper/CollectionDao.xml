@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.app.homestay.mapper.CollectionMapper">
+
+    <resultMap id="collections" type="com.app.homestay.domain.CollectionInfo">
+        <result column="uid" property="uid"/>
+        <result column="collection_id" property="collection_id"/>
+        <result column="introduce" property="introduce"/>
+        <result column="original_price" property="original_price"/>
+        <result column="discount_price" property="discount_price"/>
+        <result column="house_img" property="house_img"/>
+        <result column="address" property="address"/>
+        <result column="create_time" property="create_time"/>
+        <result column="username" property="username"/>
+    </resultMap>
+
+
+    <insert id="add" parameterType="collectionInfo">
+        insert into collection_table
+        values(#{uid},#{collection_id},#{introduce},#{original_price},#{discount_price},#{house_img},#{address},#{create_time},#{username})
+    </insert>
+
+
+    <delete id="del" parameterType="java.lang.Integer">
+
+        delete from collection_table where uid=#{uid}
+    </delete>
+
+
+    <select id="query" resultMap="collections" parameterType="java.lang.String">
+
+        select * from collection_table where username =#{username} order by uid desc
+    </select>
+
+    <select id="isColl" resultType="collectionInfo" parameterType="collectionInfo">
+
+        select * from collection_table where username =#{username} and collection_id =#{collection_id}
+
+    </select>
+
+
+</mapper>
